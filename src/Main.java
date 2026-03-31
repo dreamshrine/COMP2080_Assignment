@@ -8,5 +8,10 @@ public class Main {
 
         System.out.println("Horzontal Win: " + b.horiontalWin("X"));
         System.out.println("Vertical Win: " + b.verticalWin("X"));
+
+
+        // Main Menu Logic
+        // This will most likely call the functions HumanVSHuman() or HumanVSComp() which will be located in another class
+        // Contained in a while loop
     }
 }
