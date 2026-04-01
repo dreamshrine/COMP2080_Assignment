@@ -7,7 +7,7 @@ public class Main {
         System.out.print("Select Mode (1 or 2): ");
 
         int mode = 0;
-        while (mode != 1 && mode != 2){
+        while(mode != 1 && mode != 2) {
             try {
                 mode = Integer.parseInt(GameSetup.scanner.nextLine().trim());
                 if (mode != 1 && mode != 2)
@@ -17,7 +17,7 @@ public class Main {
             }
         }
 
-        if (mode == 1) {
+        if(mode == 1) {
             GameSetup.setupTwoPlayer();
         }else{
             GameSetup.setupOnePlayer();
