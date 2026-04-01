@@ -13,12 +13,35 @@ public class GameSetup {
 
         System.out.print("Player 2, please enter your name: ");
         String name2 = scanner.nextLine().trim();
-        System.out.print(name2 + ", your symbol is: " + symbol2);
+        System.out.println(name2 + ", your symbol is: " + symbol2);
 
         String firstPlayer = (symbol1 == 'X') ? name1 : name2;
         char firstSymbol = 'X';
         String secondPlayer = (symbol1 == 'O') ? name1 : name2;
         char secondSymbol = 'O';
+
+        Board board = new Board();
+        board.printBoard();
+
+        // game loop
+        String[] names = {firstPlayer, secondPlayer};
+        char[] symbols = {firstSymbol, secondSymbol};
+        int turn = 0;
+
+        while (true) {
+            board.promptAndPlaceMove(names[turn], symbols[turn], scanner);
+            board.printBoard();
+
+            if (board.hasWon(symbols[turn])) {
+                System.out.println(names[turn] + " wins!");
+                break;
+            } else if (board.isDraw()) {
+                System.out.println("It's a draw!");
+                break;
+            }
+
+            turn = (turn + 1) % 2;  //alternates
+        }
     }
 
     static void setupOnePlayer() {
@@ -35,7 +58,8 @@ public class GameSetup {
                 ? "\nYou (X) go first!"
                 : "\nComputer (X) goes first!");
 
-        char[][] board = initBoard();
+        Board board = new Board();
+        board.printBoard();
     }
 
     static char promptSymbol(String playerName) {
@@ -50,15 +74,5 @@ public class GameSetup {
             }
         }
         return symbol;
-    }
-
-    static char[][] initBoard() {
-        char[][] board = new char[3][3];
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                board[i][j] = '-';
-            }
-        }
-        return board;
     }
 }
