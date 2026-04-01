@@ -1,23 +1,15 @@
 public class Board {
-    static String[][] board;
+    static char[][] board;
 
     public Board(){
-        board = new String[][]
-        {
-        {null, null, null},
-        {null, null, null},
-        {null, null, null}
-        };
+        board = new char[3][3];
     }
 
     public boolean isPlayable(int row, int col){
-        if (board[row][col] == null){
-            return true;
-        }
-        return false;
+        return board[row][col] == '\0';
     }
 
-    public boolean makeMove(int row, int col, String team){
+    public boolean makeMove(int row, int col, char team){
         if (isPlayable(row, col)){
             board[row][col] = team;
             return true;
@@ -25,7 +17,7 @@ public class Board {
         return false;
     }
 
-    public boolean horiontalWin(String team){
+    public boolean horiontalWin(char team){
         for (int row = 0; row < 3; row++){
             if (board[row][0] == team && board[row][1] == team && board[row][2] == team){
                 return true;
@@ -34,7 +26,7 @@ public class Board {
         return false;
     }
 
-    public boolean verticalWin(String team){
+    public boolean verticalWin(char team){
         for (int col = 0; col < 3; col++){
             if (board[0][col] == team && board[1][col] == team && board[2][col] == team){
                 return true;
@@ -44,7 +36,7 @@ public class Board {
     }
 
     // TODO: diagonal win function that checks both diagonal win conditions
-    public boolean diagonalWin(String team){
+    public boolean diagonalWin(char team){
         return false;
     }
 
