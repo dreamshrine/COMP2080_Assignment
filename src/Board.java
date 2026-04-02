@@ -1,8 +1,13 @@
-import java.util.Scanner;
+// Jack Grace - 101577863
+// Philip Fredeluces - 101576305
+// Thi Tuyet Nhung Huynh - 101522902
+// Annika Duggal - 101574406
+// Shayne Atkins - 101572148
 
 public class Board {
     private char[][] board;
 
+    // Initializes the plain board
     public Board() {
         board = new char[3][3];
         for (int row = 0; row < 3; row++) {
@@ -12,63 +17,40 @@ public class Board {
         }
     }
 
-    // Check if a cell is available to play
+    /**
+     * 
+     * @param row Row value
+     * @param col Column value
+     * @return Whether or not square is playable
+     */
     public boolean isPlayable(int row, int col) {
         return board[row][col] == '-';
     }
 
-    //Place symbol on the board, return true if successful
-    public boolean makeMove(int row, int col, char symbol) {
+    /**
+     * 
+     * @param row Row value
+     * @param col Column value
+     * @param player Char value of player symbol [X or O]
+     * @return True if move was sucessful
+     */
+    public boolean makeMove(int row, int col, char player) {
         if (isPlayable(row, col)) {
-            board[row][col] = symbol;
+            board[row][col] = player;
             return true;
         }
         return false;
     }
 
-    public void promptAndPlaceMove(String playerName, char symbol, Scanner scanner) {
-        int row = -1;
-        int col = -1;
-        boolean placed = false;
-
-        while (!placed) {
-            System.out.println(playerName + " (" + symbol + "), enter your move.");
-
-            row = promptCoordinate("Row (1-3): ", scanner) - 1;   //convert to 0 index
-            col = promptCoordinate("Column (1-3): ", scanner) - 1;
-
-            if (!isInBounds(row, col)) {
-                System.out.println("Please enter row and column values between 1 and 3.");
-            } else if (!isPlayable(row, col)) {
-                System.out.println("That cell is taken. Choose an empty cell.");
-            } else {
-                makeMove(row, col, symbol);
-                placed = true;
-            }
-        }
+    /**
+     * Reset the square at postition [row, column] back to defulat "-"
+     * @param row row value
+     * @param col column value
+     */
+    public void undoMove(int row, int col) {
+        board[row][col] = '-';
     }
 
-    private int promptCoordinate(String prompt, Scanner scanner) {
-        int value = -1;
-        while (value < 1 || value > 3) {
-            System.out.print(prompt);
-            try {
-                value = Integer.parseInt(scanner.nextLine().trim());
-                if (value < 1 || value > 3) {
-                    System.out.println("Invalid input. Enter a number between 1 and 3.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Enter a number between 1 and 3.");
-            }
-        }
-        return value;
-    }
-
-    public boolean isInBounds(int row, int col) {
-        return row >= 0 && row < 3 && col >= 0 && col < 3;
-    }
-
-    // Win checks
     public boolean horizontalWin(char symbol) {
         for (int row = 0; row < 3; row++) {
             if (board[row][0] == symbol && board[row][1] == symbol && board[row][2] == symbol) {
@@ -105,7 +87,7 @@ public class Board {
     }
 
     //check for draw (ie full board)
-    public boolean isDraw() {
+    public boolean isBoardFull() {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 if (board[row][col] == '-') {
@@ -127,8 +109,5 @@ public class Board {
             System.out.println();
             System.out.println("  -------------");
         }
-    }
-    public void undoMove(int row, int col) {
-        board[row][col] = '-';
     }
 }
